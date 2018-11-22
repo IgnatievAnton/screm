@@ -4,31 +4,18 @@ from telebot import types
 import logging
 
 
-API_TOKEN = 'token'
+API_TOKEN = ''
 
 bot = telebot.TeleBot(API_TOKEN)
 telebot.logger.setLevel(logging.DEBUG)
 telebot.logger.setLevel(logging.DEBUG)
 
 
-@bot.inline_handler(lambda query: query.query == 'test')
+@bot.inline_handler(lambda query: query.query)
 def query_text(inline_query):
     try:
-        r = types.InlineQueryResultArticle('1', 'R1', types.InputTextMessageContent(" .Все привет2 ! "))
-        r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('hi'))
-        bot.answer_inline_query(inline_query.id, [r, r2])
-    except Exception as e:
-        print(e)
-
-
-
-
-@bot.inline_handler(lambda query: len(query.query) is 0)
-def default_query(inline_query):
-    try:
-        r = types.InlineQueryResultArticle('1', 'default', types.InputTextMessageContent("1"))
-        c = types.InlineQueryResultArticle('2', 'test', types.InputTextMessageContent(lambda query: query.query))
-        bot.answer_inline_query(inline_query.id, [r,c])
+        r = types.InlineQueryResultArticle('1', 'R1', types.InputTextMessageContent(str(inline_query.query)+" Всем здоровья и хорошего настроения!"))
+        bot.answer_inline_query(inline_query.id, [r])
     except Exception as e:
         print(e)
 
